@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<robot name="urdf_sample" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find urdf_sample_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find urdf_sample_description)/urdf/urdf_sample.trans" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.0 0.0 0.024875120932642453" rpy="0 0 0"/>
+    <mass value="0.9874153755826697"/>
+    <inertia ixx="0.000411" iyy="0.000416" izz="0.000414" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelB_1">
+  <inertial>
+    <origin xyz="0.0025000000000000022 7.237528875152536e-18 7.450581991641503e-11" rpy="0 0 0"/>
+    <mass value="0.01926679869584365"/>
+    <inertia ixx="2e-06" iyy="1e-06" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.03 0.0 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/wheelB_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.03 0.0 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/wheelB_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheelA_1">
+  <inertial>
+    <origin xyz="-0.0025000000000000022 1.0856293312728804e-17 7.450581124279765e-11" rpy="0 0 0"/>
+    <mass value="0.01926679869584365"/>
+    <inertia ixx="2e-06" iyy="1e-06" izz="1e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.03 0.0 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/wheelA_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="0.03 0.0 -0.005" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://urdf_sample_description/meshes/wheelA_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="rev1" type="continuous">
+  <origin xyz="0.03 0.0 0.005" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelB_1"/>
+  <axis xyz="1.0 0.0 -0.0"/>
+</joint>
+
+<joint name="rev2" type="continuous">
+  <origin xyz="-0.03 0.0 0.005" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheelA_1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+</joint>
+
+</robot>
