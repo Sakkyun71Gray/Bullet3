@@ -22,7 +22,7 @@ StartPos2 = [-1,0,0]
 StartOrient2 = p.getQuaternionFromEuler([0,0,- math.pi / 2]) 
 
 carId = p.loadURDF("/data/racecar/racecar.urdf",cubeStartPos, cubeStartOrientation)
-sample_carId = p.loadURDF("/sample/urdf/urdf_sample2.urdf", StartPos2, StartOrient2)
+sample_carId = p.loadURDF("/sample/urdf/urdf_sample.urdf", StartPos2, StartOrient2)
 
 frame = []
 frame2 = []
@@ -34,7 +34,7 @@ for t in range (640):
     #p.setJointMotorControl2(carId, 5, p.VELOCITY_CONTROL, targetVelocity=10)
     #p.setJointMotorControl2(carId, 7, p.VELOCITY_CONTROL, targetVelocity=10)
     p.setJointMotorControl2(sample_carId, 0, p.VELOCITY_CONTROL, targetVelocity=10)
-    p.setJointMotorControl2(sample_carId, 1, p.VELOCITY_CONTROL, targetVelocity=-10)
+    p.setJointMotorControl2(sample_carId, 1, p.VELOCITY_CONTROL, targetVelocity=10)
     p.stepSimulation()
     if t % 8 == 0:
         width, height, rgbImg, depthImg, segImg = p.getCameraImage(360,240)
