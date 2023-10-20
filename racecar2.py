@@ -23,6 +23,13 @@ StartOrient2 = p.getQuaternionFromEuler([0,0,- math.pi / 2])
 
 carId = p.loadURDF("/data/racecar/racecar.urdf",cubeStartPos, cubeStartOrientation)
 sample_carId = p.loadURDF("/sample/urdf/urdf_sample.urdf", StartPos2, StartOrient2)
+#viewMatrix = p.computeViewMatrix(cameraEyePosition=[0, 2, 3],cameraTargetPosition=[0, 0, 0],cameraUpVector=[0, 1, 0])
+projectionMatrix = p.computeProjectionMatrixFOV(fov=60, aspect=float(360)/240, nearVal=0.1, farVal=20) #(fov=, aspect=, nearVal=描画最小距離, farVal=描画最大距離)
+
+posz = 2
+cv = 0
+r = 1
+sin_T = 0
 
 frame = []
 frame2 = []
@@ -33,16 +40,20 @@ for t in range (640):
     #p.setJointMotorControl2(carId, 3, p.VELOCITY_CONTROL, targetVelocity=10)
     #p.setJointMotorControl2(carId, 5, p.VELOCITY_CONTROL, targetVelocity=10)
     #p.setJointMotorControl2(carId, 7, p.VELOCITY_CONTROL, targetVelocity=10)
-    p.setJointMotorControl2(sample_carId, 0, p.VELOCITY_CONTROL, targetVelocity=10)
-    p.setJointMotorControl2(sample_carId, 1, p.VELOCITY_CONTROL, targetVelocity=10)
+    p.setJointMotorControl2(sample_carId, 0, p.VELOCITY_CONTROL, targetVelocity=100)
+    p.setJointMotorControl2(sample_carId, 1, p.VELOCITY_CONTROL, targetVelocity=100)
     p.stepSimulation()
     if t % 8 == 0:
-        width, height, rgbImg, depthImg, segImg = p.getCameraImage(360,240)
+        sin_T += math.pi / 60
+        viewMatrix = p.computeViewMatrix(cameraEyePosition=[r * math.sin(sin_T), r * math.cos(sin_T), 2],cameraTargetPosition=[0, 0, 0],cameraUpVector=[0, 0, 1])
+        width, height, rgbImg, depthImg, segImg = p.getCameraImage(360,240,viewMatrix,projectionMatrix)
         frame.append(rgbImg)
         #frame2.append(depthImg)
         #frame3.append(segImg)
         Position, Orientation = p.getBasePositionAndOrientation(carId)
         Positions.append(Position)
+        posz += 0.1
+        cv += 1
 
 images =[]
 for im in frame:
@@ -64,7 +75,7 @@ plt.plot(times, Positions[2])
 plt.plot(times, Positions[0])
 plt.plot(times, Positions[1])
 plt.plot(times, Positions[2])
-plt.show()
+#plt.show()
 
 
 """
