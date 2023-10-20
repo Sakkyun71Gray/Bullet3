@@ -39,6 +39,9 @@
       <geometry>
         <mesh filename="../meshes/wheelB_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
+      <contact>
+        <lateral_friction value="0.1"/>
+      </contact>
     </collision>
   </link>
 
@@ -60,6 +63,9 @@
       <geometry>
         <mesh filename="../meshes/wheelA_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
+      <contact>
+        <lateral_friction value="0.1"/>
+      </contact>
     </collision>
   </link>
 
