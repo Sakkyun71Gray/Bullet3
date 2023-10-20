@@ -26,10 +26,10 @@ sample_carId = p.loadURDF("/sample/urdf/urdf_sample.urdf", StartPos2, StartOrien
 #viewMatrix = p.computeViewMatrix(cameraEyePosition=[0, 2, 3],cameraTargetPosition=[0, 0, 0],cameraUpVector=[0, 1, 0])
 projectionMatrix = p.computeProjectionMatrixFOV(fov=60, aspect=float(360)/240, nearVal=0.1, farVal=20) #(fov=, aspect=, nearVal=描画最小距離, farVal=描画最大距離)
 
-posz = 2
-cv = 0
 r = 1
-sin_T = 0
+Theta = 0
+posz = 0.2
+cv = 0
 
 frame = []
 frame2 = []
@@ -44,8 +44,7 @@ for t in range (640):
     p.setJointMotorControl2(sample_carId, 1, p.VELOCITY_CONTROL, targetVelocity=100)
     p.stepSimulation()
     if t % 8 == 0:
-        sin_T += math.pi / 60
-        viewMatrix = p.computeViewMatrix(cameraEyePosition=[r * math.sin(sin_T), r * math.cos(sin_T), 2],cameraTargetPosition=[0, 0, 0],cameraUpVector=[0, 0, 1])
+        viewMatrix = p.computeViewMatrix(cameraEyePosition=[r * math.sin(Theta), r * math.cos(Theta), posz],cameraTargetPosition=[0, 0, 0],cameraUpVector=[0, 0, 1])
         width, height, rgbImg, depthImg, segImg = p.getCameraImage(360,240,viewMatrix,projectionMatrix)
         frame.append(rgbImg)
         #frame2.append(depthImg)
@@ -54,6 +53,7 @@ for t in range (640):
         Positions.append(Position)
         posz += 0.1
         cv += 1
+        Theta += math.pi / 60
 
 images =[]
 for im in frame:
